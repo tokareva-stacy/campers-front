@@ -1,9 +1,12 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { Camper } from "@/types/camper";
 import { useFavoritesStore } from "@/lib/store/favoritesStore";
 import { formatPrice } from "@/lib/utils/formatPrice";
+
+import css from "./CamperCard.module.css";
 
 interface Props {
   camper: Camper;
@@ -12,20 +15,128 @@ interface Props {
 export default function CamperCard({ camper }: Props) {
   const toggleFavorite = useFavoritesStore((s) => s.toggleFavorite);
   const isFavorite = useFavoritesStore((s) => s.isFavorite(camper.id));
+  const imageSrc =
+  camper.gallery && camper.gallery.length > 0
+    ? camper.gallery[0]
+    : "/img/placeholder.jpg";
 
   return (
-    <div style={{ border: "1px solid #ccc", marginBottom: 16, padding: 16 }}>
-      <h3>{camper.name}</h3>
-      <p>{camper.location}</p>
-      <p>€{formatPrice(camper.price)}</p>
+    <div className={css.card}>
+      {/* IMAGE */}
+      <div className={css.imageWrapper}>
+        <Image
+          src={imageSrc}
+          alt={camper.name}
+          fill
+          className={css.image}
+        />
+      </div>
 
-      <button onClick={() => toggleFavorite(camper.id)}>
-        {isFavorite ? "❤️ Remove" : "🤍 Add"}
-      </button>
+      {/* CONTENT */}
+      <div className={css.content}>
+        {/* HEADER */}
+        <div className={css.header}>
+          <h3 className={css.title}>{camper.name}</h3>
 
-      <Link href={`/catalog/${camper.id}`}>
-        <button>Show more</button>
-      </Link>
+          <div className={css.priceBlock}>
+            <span className={css.price}>
+              €{formatPrice(camper.price)}
+            </span>
+
+            <button
+              className={css.favoriteBtn}
+              onClick={() => toggleFavorite(camper.id)}
+              aria-label="Add to favorites"
+            >
+              <svg width="24" height="24">
+                <use href="/icons/sprite.svg#icon-like" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* META */}
+        <div className={css.meta}>
+          <span className={css.rating}>
+            <svg className={css.ratingIcon} width="16" height="16">
+                <use href="/icons/sprite.svg#icon-yellow-star" />
+            </svg>
+            {camper.rating} ({camper.reviews.length} Reviews)
+          </span>
+
+          <span className={css.location}>
+            <svg className={css.locationIcon} width="16" height="16">
+                <use href="/icons/sprite.svg#icon-map" />
+            </svg>
+            {camper.location}
+          </span>
+        </div>
+
+        {/* DESCRIPTION */}
+        <p className={css.description}>
+          {camper.description}
+        </p>
+
+        {/* FEATURES */}
+        <ul className={css.features}>
+            {camper.transmission === "automatic" && (
+            <li>
+                <svg>
+                    <use href="/icons/sprite.svg#icon-automatic" />
+                </svg>
+                Automatic
+            </li>
+            )}
+
+            <li>
+                <svg>
+                    <use href="/icons/sprite.svg#icon-fuel-pump" />
+                </svg>
+                Petrol
+            </li>
+
+            {camper.kitchen && (
+            <li>
+                <svg>
+                    <use href="/icons/sprite.svg#icon-cup" />
+                </svg>
+            Kitchen
+            </li>
+            )}
+
+            {camper.AC && (
+            <li>
+                <svg>
+                    <use href="/icons/sprite.svg#icon-ac" />
+                </svg>
+            AC
+            </li>
+            )}
+
+            {camper.bathroom && (
+                <li>
+                    <svg>
+                        <use href="/icons/sprite.svg#icon-bathroom" />
+                    </svg>
+                Bathroom
+                </li>
+            )}
+
+            {camper.TV && (
+                <li>
+                    <svg>
+                        <use href="/icons/sprite.svg#icon-tv" />
+                    </svg>
+                TV
+                </li>
+            )}
+        </ul>
+
+        {/* ACTION */}
+        <Link href={`/catalog/${camper.id}`}>
+          <button className={css.showMore}>Show more</button>
+        </Link>
+      </div>
     </div>
   );
 }
