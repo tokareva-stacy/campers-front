@@ -1,0 +1,38 @@
+.catalog {
+  padding-top: 48px;
+}
+
+.layout {
+  display: flex;
+  gap: 64px;
+}
+
+/* LEFT */
+.sidebar {
+  width: 360px;
+  flex-shrink: 0;
+}
+
+/* RIGHT */
+.content {
+  flex: 1;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.loadMore {
+  margin: 48px auto 0;
+  display: block;
+
+  padding: 16px 32px;
+  border-radius: 200px;
+  border: 1px solid #e4e7ec;
+  background: #fff;
+
+  font-size: 16px;
+  cursor: pointer;
+}

@@ -1,7 +1,7 @@
 import axiosInstance from "./axios";
-import { Camper } from "../../types/camper";
+import { Camper } from "@/types/camper";
 
-export interface GetCampersParams {
+interface Params {
   page?: number;
   limit?: number;
   location?: string;
@@ -11,15 +11,20 @@ export interface GetCampersParams {
   bathroom?: boolean;
 }
 
-export const getCampers = async (params: GetCampersParams) => {
-  const { data } = await axiosInstance.get<Camper[]>("/campers", {
-    params,
+export const getCampers = async (params: Params): Promise<Camper[]> => {
+  
+  const cleanedParams = Object.fromEntries(
+    Object.entries(params).filter(
+      ([_, value]) => value !== false && value !== null && value !== ""
+    )
+  );
+
+  const { data } = await axiosInstance.get("/campers", {
+    params: cleanedParams,
   });
 
-  return data;
-};
+  if (Array.isArray(data)) return data;
+  if ("items" in data) return data.items;
 
-export const getCamperById = async (id: string) => {
-  const { data } = await axiosInstance.get<Camper>(`/campers/${id}`);
-  return data;
+  return [];
 };

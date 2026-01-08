@@ -1,32 +1,48 @@
 import { create } from "zustand";
 
-export interface FiltersState {
+interface FiltersState {
   location: string;
   form: string | null;
+
   AC: boolean;
   kitchen: boolean;
   bathroom: boolean;
+  TV: boolean;
+  transmission: "automatic" | null;
 
   setLocation: (value: string) => void;
-  setForm: (value: string | null) => void;
-  toggleAC: () => void;
-  toggleKitchen: () => void;
-  toggleBathroom: () => void;
+  toggleEquipment: (key: EquipmentKey) => void;
+  setForm: (value: string) => void;
   resetFilters: () => void;
 }
+
+type EquipmentKey = "AC" | "kitchen" | "bathroom" | "TV" | "transmission";
 
 export const useFiltersStore = create<FiltersState>((set) => ({
   location: "",
   form: null,
+
   AC: false,
   kitchen: false,
   bathroom: false,
+  TV: false,
+  transmission: null,
 
   setLocation: (value) => set({ location: value }),
+
+  toggleEquipment: (key) =>
+    set((state) => {
+      if (key === "transmission") {
+        return {
+          transmission:
+            state.transmission === "automatic" ? null : "automatic",
+        };
+      }
+
+      return { [key]: !state[key] } as Partial<FiltersState>;
+    }),
+
   setForm: (value) => set({ form: value }),
-  toggleAC: () => set((state) => ({ AC: !state.AC })),
-  toggleKitchen: () => set((state) => ({ kitchen: !state.kitchen })),
-  toggleBathroom: () => set((state) => ({ bathroom: !state.bathroom })),
 
   resetFilters: () =>
     set({
@@ -35,5 +51,7 @@ export const useFiltersStore = create<FiltersState>((set) => ({
       AC: false,
       kitchen: false,
       bathroom: false,
+      TV: false,
+      transmission: null,
     }),
 }));

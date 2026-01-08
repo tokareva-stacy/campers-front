@@ -1,75 +1,47 @@
 "use client";
 
-import { useEffect } from "react";
 import { useCampersStore } from "@/lib/store/campersStore";
-import { useFiltersStore } from "@/lib/store/filtersStore";
 import CamperCard from "@/components/CamperCard/CamperCard";
-import { Camper } from "@/types/camper";
+import FiltersPanel from "@/components/FiltersPanel/FiltersPanel";
 
+import css from "./Catalog.module.css";
+import container from "@/styles/container.module.css";
 
 export default function CatalogPage() {
-  const {
-    campers,
-    fetchCampers,
-    loadMore,
-    isLoading,
-    hasMore,
-    resetCampers,
-  } = useCampersStore();
-
-  const filters = useFiltersStore();
-
-  // первая загрузка + реакция на фильтры
-  useEffect(() => {
-    resetCampers();
-    fetchCampers(true);
-  }, [
-    filters.location,
-    filters.form,
-    filters.AC,
-    filters.kitchen,
-    filters.bathroom,
-  ]);
+  const campers = useCampersStore((s) => s.campers);
+  const fetchCampers = useCampersStore((s) => s.fetchCampers);
+  const isLoading = useCampersStore((s) => s.isLoading);
+  const hasMore = useCampersStore((s) => s.hasMore);
 
   return (
-    <section>
-      <h1>Catalog</h1>
+    <section className={css.catalog}>
+      <div className={container.container}>
+        <div className={css.layout}>
+          {/* SIDEBAR */}
+          <aside className={css.sidebar}>
+            <FiltersPanel />
+          </aside>
 
-      {/* FILTERS */}
-      {/* пока заглушка, подключим следующим шагом */}
-      <div style={{ marginBottom: 20 }}>Filters panel</div>
+          {/* RIGHT CONTENT */}
+          <div className={css.content}>
+            <div className={css.list}>
+              {campers.map((camper) => (
+                <CamperCard key={camper.id} camper={camper} />
+              ))}
+            </div>
 
-      {/* CAMPERS */}
-      <div>
-        {campers.map((camper) => (
-          <CamperCard key={camper.id} camper={camper} />
-        ))}
+            {hasMore && (
+              <button
+                className={css.loadMore}
+                onClick={() => fetchCampers()}
+                disabled={isLoading}
+              >
+                {isLoading ? "Loading..." : "Load more"}
+              </button>
+            )}
+          </div>
+        </div>
       </div>
-
-      {/* LOAD MORE */}
-      {hasMore && (
-        <button onClick={loadMore} disabled={isLoading}>
-          {isLoading ? "Loading..." : "Load More"}
-        </button>
-      )}
     </section>
   );
 }
-
-
-
-
-
-// import { getCampers } from "@/lib/api/campers";
-
-// export default async function TestPage() {
-//   const campers = await getCampers({ limit: 3 });
-
-//   return (
-//     <div>
-//       {campers.map(c => (
-//         <p key={c.id}>{c.name}</p>
-//       ))}
-//     </div>
-//   );
-// }
