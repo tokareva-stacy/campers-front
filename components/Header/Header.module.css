@@ -1,0 +1,40 @@
+.header {
+    border-bottom: 1px solid #f2f4f7;
+    /* padding: 24px 64px; */
+    padding-top: 24px;
+    height: 72px;
+}  
+
+.inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+}
+
+.nav {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 32px;
+}
+
+.nav a {
+  font-size: 16px;
+  font-weight: 500;
+  color: #101828;
+}
+
+.active {
+  color: #d84343;
+}
+
+.link {
+  font-size: 16px;
+  font-weight: 500;
+  color: #101828;
+  transition: color 0.2s ease;
+  line-height: 150%;
+  text-align: center;
+}  
