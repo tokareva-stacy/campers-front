@@ -1,10 +1,15 @@
+export interface CamperImage {
+  thumb: string;
+  original: string;
+}
+
 export interface Camper {
   id: string;
   name: string;
   price: number;
   location: string;
   description: string;
-  gallery: string[];
+  gallery: CamperImage[];
   rating: number;
   reviews: Review[];
 

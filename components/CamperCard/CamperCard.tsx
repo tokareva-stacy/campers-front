@@ -24,12 +24,14 @@ export default function CamperCard({ camper }: Props) {
     <div className={css.card}>
       {/* IMAGE */}
       <div className={css.imageWrapper}>
-        <Image
-          src={imageSrc}
-          alt={camper.name}
-          fill
-          className={css.image}
-        />
+        {camper.gallery?.length > 0 && (
+          <Image
+            src={camper.gallery[0].original}
+            alt={camper.name}
+            fill
+            className={css.image}
+          />
+        )}
       </div>
 
       {/* CONTENT */}
@@ -44,7 +46,7 @@ export default function CamperCard({ camper }: Props) {
             </span>
 
             <button
-              className={css.favoriteBtn}
+              className={`${css.favoriteBtn} ${isFavorite ? css.active : ""}`}
               onClick={() => toggleFavorite(camper.id)}
               aria-label="Add to favorites"
             >
@@ -81,7 +83,7 @@ export default function CamperCard({ camper }: Props) {
         <ul className={css.features}>
             {camper.transmission === "automatic" && (
             <li>
-                <svg>
+                <svg className={css.featuresIcon}>
                     <use href="/icons/sprite.svg#icon-automatic" />
                 </svg>
                 Automatic
@@ -89,24 +91,15 @@ export default function CamperCard({ camper }: Props) {
             )}
 
             <li>
-                <svg>
+                <svg className={css.featuresIcon}>
                     <use href="/icons/sprite.svg#icon-fuel-pump" />
                 </svg>
                 Petrol
             </li>
 
-            {camper.kitchen && (
-            <li>
-                <svg>
-                    <use href="/icons/sprite.svg#icon-cup" />
-                </svg>
-            Kitchen
-            </li>
-            )}
-
             {camper.AC && (
             <li>
-                <svg>
+                <svg className={css.featuresIcon}>
                     <use href="/icons/sprite.svg#icon-ac" />
                 </svg>
             AC
@@ -115,21 +108,76 @@ export default function CamperCard({ camper }: Props) {
 
             {camper.bathroom && (
                 <li>
-                    <svg>
+                    <svg className={css.featuresIcon}>
                         <use href="/icons/sprite.svg#icon-bathroom" />
                     </svg>
                 Bathroom
                 </li>
             )}
 
+            {camper.kitchen && (
+            <li>
+                <svg className={css.featuresIcon}>
+                    <use href="/icons/sprite.svg#icon-cup" />
+                </svg>
+            Kitchen
+            </li>
+            )}        
+
             {camper.TV && (
                 <li>
-                    <svg>
+                    <svg className={css.featuresIcon}>
                         <use href="/icons/sprite.svg#icon-tv" />
                     </svg>
                 TV
                 </li>
             )}
+
+            {camper.radio && (
+                <li>
+                    <svg className={css.featuresIcon}>
+                        <use href="/icons/sprite.svg#icon-radio" />
+                    </svg>
+                Radio
+                </li>
+            )}
+
+            {camper.refrigerator && (
+                <li>
+                    <svg className={css.featuresIcon}>
+                        <use href="/icons/sprite.svg#icon-refrigerator" />
+                    </svg>
+                Refrigerator
+                </li>
+            )}
+
+            {camper.microwave && (
+                <li>
+                    <svg className={css.featuresIconStroke}>
+                        <use href="/icons/sprite.svg#icon-microwave" />
+                    </svg>
+                Microwave
+                </li>
+            )}
+
+            {camper.gas && (
+                <li>
+                    <svg className={css.featuresIconStroke}>
+                        <use href="/icons/sprite.svg#icon-gas" />
+                    </svg>
+                Gas
+                </li>
+            )}
+
+            {camper.water && (
+                <li>
+                    <svg className={css.featuresIconStroke}>
+                        <use href="/icons/sprite.svg#icon-water" />
+                    </svg>
+                Water
+                </li>
+            )}    
+  
         </ul>
 
         {/* ACTION */}
