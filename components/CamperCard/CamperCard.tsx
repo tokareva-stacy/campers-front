@@ -13,6 +13,7 @@ interface Props {
 }
 
 export default function CamperCard({ camper }: Props) {
+  console.log("RENDER CARD:", camper);
   const toggleFavorite = useFavoritesStore((s) => s.toggleFavorite);
   const isFavorite = useFavoritesStore((s) => s.isFavorite(camper.id));
   const imageSrc =

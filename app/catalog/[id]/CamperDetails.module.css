@@ -1,0 +1,65 @@
+.page {
+  max-width: 1312px;
+  padding: 48px 0 80px 0;
+  
+}
+
+/* HEADER */
+.header {
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 28px;
+}
+
+.title {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 133%;
+    margin-bottom: 8px;
+}
+
+.meta {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: #475467;
+}
+
+.rating {
+  text-decoration: underline;
+}
+
+.rating,
+.location {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    color: #101828;
+    display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.price {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 133%;
+}
+
+/* DESCRIPTION */
+.description {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    color: #475467;
+    margin-bottom: 60px;
+}
+
+/* BOTTOM */
+.bottom {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+  align-items: flex-start;
+}

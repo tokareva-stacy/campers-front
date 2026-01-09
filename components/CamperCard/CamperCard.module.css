@@ -6,7 +6,7 @@
   border-radius: 20px;
   border: 1px solid #dadde1;
   background-color: #fff;
-  margin-bottom: 40px;
+  margin-bottom: 8px;
 }
 
 /* IMAGE */
@@ -92,11 +92,11 @@
 
 .rating,
 .location {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 150%;
-    color: #101828;
-    display: flex;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: #101828;
+  display: flex;
   align-items: center;
   gap: 4px;
 }

@@ -12,7 +12,6 @@ interface Params {
 }
 
 export const getCampers = async (params: Params): Promise<Camper[]> => {
-  
   const cleanedParams = Object.fromEntries(
     Object.entries(params).filter(
       ([_, value]) => value !== false && value !== null && value !== ""

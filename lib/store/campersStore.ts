@@ -4,7 +4,10 @@ import { getCampers } from "@/lib/api/campers";
 import { useFiltersStore } from "./filtersStore";
 
 interface CampersState {
-  campers: Camper[];
+  campers: {
+    items: Camper[],
+    total: 0,
+  },
   page: number;
   isLoading: boolean;
   hasMore: boolean;
